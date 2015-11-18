@@ -2,12 +2,11 @@ package com.pawan.test;
 
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 
 public class MainClass {
 	
@@ -93,8 +92,9 @@ public class MainClass {
 	
 	private static Employee getManager(String employeeName) {
 		Session session = getSessionFactory().openSession();
-        List<Employee> manager =session.createQuery("from Employee where empName='"+employeeName+"'").list();
-        return  (manager!=null && manager.size()>0)?manager.get(0):null ;
+        //List<Employee> manager =session.createQuery("from Employee where empName='"+employeeName+"'").list();
+		List<Employee> manager=session.createCriteria(Employee.class).add(Restrictions.eq("empName",employeeName)).list();
+		return  (manager!=null && manager.size()>0)?manager.get(0):null ;
 	}
 
 }
