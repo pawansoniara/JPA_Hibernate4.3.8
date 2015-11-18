@@ -90,10 +90,11 @@ public class MainClass {
         session.getTransaction().commit();
 	}
 	
+	@SuppressWarnings("unchecked")
 	private static Employee getManager(String employeeName) {
 		Session session = getSessionFactory().openSession();
         //List<Employee> manager =session.createQuery("from Employee where empName='"+employeeName+"'").list();
-		List<Employee> manager=session.createCriteria(Employee.class).add(Restrictions.eq("empName",employeeName)).list();
+		List<Employee> manager= session.createCriteria(Employee.class).add(Restrictions.eq("empName",employeeName)).list();
 		return  (manager!=null && manager.size()>0)?manager.get(0):null ;
 	}
 
